@@ -69,6 +69,26 @@
 				"command": "multiclip.paste",
 				"title": "Multiclip Paste"
 			},
+            {
+                "command": "multiclip.paste_1",
+                "title": "Multiclip Paste Item 1"
+            },
+            {
+                "command": "multiclip.paste_2",
+                "title": "Multiclip Paste Item 2"
+            },
+            {
+                "command": "multiclip.paste_3",
+                "title": "Multiclip Paste Item 3"
+            },
+            {
+                "command": "multiclip.paste_4",
+                "title": "Multiclip Paste Item 4"
+            },
+            {
+                "command": "multiclip.paste_5",
+                "title": "Multiclip Paste Item 5"
+            },
 			{
 				"command": "multiclip.regularPaste",
 				"title": "Multiclip Regular Paste"
@@ -111,6 +131,36 @@
 				"command": "multiclip.regularPaste",
 				"when": "editorTextFocus"
 			},
+            {
+                "key": "alt+1",
+                "mac": "alt+1",
+                "command": "multiclip.paste_1",
+                "when": "editorTextFocus"
+            },
+            {
+                "key": "alt+2",
+                "mac": "alt+2",
+                "command": "multiclip.paste_2",
+                "when": "editorTextFocus"
+            },
+            {
+                "key": "alt+3",
+                "mac": "alt+3",
+                "command": "multiclip.paste_3",
+                "when": "editorTextFocus"
+            },
+            {
+                "key": "alt+4",
+                "mac": "alt+4",
+                "command": "multiclip.paste_4",
+                "when": "editorTextFocus"
+            },
+            {
+                "key": "alt+5",
+                "mac": "alt+5",
+                "command": "multiclip.paste_5",
+                "when": "editorTextFocus"
+            },
 			{
 				"key": "shift+ctrl+c",
 				"mac": "shift+cmd+c",

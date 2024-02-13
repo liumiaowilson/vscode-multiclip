@@ -53,3 +53,11 @@ Visual Studio Code 1.7
 ## License
 
 [MIT](LICENSE.md)
+
+## Note
+Steps:
+1. npm install -g @vscode/vsce
+2. npm install
+3. vsce package
+
+When running `vsce package`, if there is anything wrong with `node_modules/@types/node/index.d.ts`, just comment out the complaining part.
