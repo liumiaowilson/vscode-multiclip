@@ -1,3 +1,4 @@
+import { spawn } from 'child_process';
 import * as vscode from 'vscode';
 import Window = vscode.window;
 import QuickPickItem = vscode.QuickPickItem;
@@ -298,6 +299,40 @@ export function activate(context: vscode.ExtensionContext) {
     }));
 
     context.subscriptions.concat(disposables);
+
+    (<any>vscode.window).registerTerminalLinkProvider({
+        provideTerminalLinks: (context, token) => {
+            const links = [];
+            let idx = 0;
+            while(true) {
+                const startIndex = (context.line as string).indexOf("[m://", idx);
+                if (startIndex === -1) {
+                    break;
+                }
+                const endIndex = (context.line as string).indexOf(']', startIndex);
+                if (endIndex === -1) {
+                    break;
+                }
+
+                idx = endIndex + 1;
+                const data = (context.line as string).substring(startIndex + 5, endIndex - 1);
+
+                return [
+                    {
+                        startIndex,
+                        length: endIndex - startIndex + 1,
+                        tooltip: "Custom Link",
+                        data,
+                    },
+                ];
+            }
+
+            return links;
+        },
+        handleTerminalLink: (link: any) => {
+            spawn('bash', [ '/home/codebuilder/DevOps/dev', 'resolveLink', link.data ]);
+        },
+    });
 }
 
 export function deactivate() {}
