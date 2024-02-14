@@ -315,7 +315,7 @@ export function activate(context: vscode.ExtensionContext) {
                 }
 
                 idx = endIndex + 1;
-                const data = (context.line as string).substring(startIndex + 5, endIndex - 1);
+                const data = (context.line as string).substring(startIndex + 5, endIndex);
 
                 return [
                     {
