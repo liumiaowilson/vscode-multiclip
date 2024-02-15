@@ -317,20 +317,20 @@ export function activate(context: vscode.ExtensionContext) {
                 idx = endIndex + 1;
                 const data = (context.line as string).substring(startIndex + 5, endIndex);
 
-                return [
-                    {
-                        startIndex,
-                        length: endIndex - startIndex + 1,
-                        tooltip: "Custom Link",
-                        data,
-                    },
-                ];
+                const link = {
+                    startIndex,
+                    length: endIndex - startIndex + 1,
+                    tooltip: "Custom Link",
+                    data,
+                };
+
+                links.push(link);
             }
 
             return links;
         },
         handleTerminalLink: (link: any) => {
-            spawn('bash', [ '/home/codebuilder/DevOps/dev', 'resolveLink', link.data ]);
+            spawn('bash', [ '/home/codebuilder/DevOps/dev', 'resolveLink', link.data, ]);
         },
     });
 }
