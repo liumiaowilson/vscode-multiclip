@@ -329,6 +329,22 @@ export function activate(context: vscode.ExtensionContext) {
         });
     }));
 
+    disposables.push(vscode.commands.registerCommand('multiclip.runScript', (path) => {
+        return Promise.resolve(path).then(path => {
+            if(!path) {
+                return vscode.window.showInputBox({ placeHolder: 'Path of Script to Run'});
+            }
+        }).then(path => {
+            if(!path) return;
+
+            path = path.replace('~', homedir());
+
+            const script = readFileSync(path, 'utf8');
+            const fn = eval(script);
+            return fn(vscode);
+        });
+    }));
+
     context.subscriptions.concat(disposables);
 
     (<any>vscode.window).registerTerminalLinkProvider({

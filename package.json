@@ -120,6 +120,10 @@
 			{
 				"command": "multiclip.openFileInVIM",
 				"title": "Multiclip Open File in VIM"
+			},
+			{
+				"command": "multiclip.runScript",
+				"title": "Multiclip Run Script"
 			}
 		],
 		"keybindings": [
