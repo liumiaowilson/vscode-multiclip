@@ -320,6 +320,15 @@ export function activate(context: vscode.ExtensionContext) {
         });
     }));
 
+    disposables.push(vscode.commands.registerCommand('multiclip.openFileInVIM', () => {
+        const path = vscode.window.activeTextEditor.document.fileName;
+        if(!path) return;
+
+        return vscode.commands.executeCommand('workbench.action.createTerminalEditor').then(() => {
+            return (<any>vscode.window).activeTerminal.sendText(`vi ${path}`, true);
+        });
+    }));
+
     context.subscriptions.concat(disposables);
 
     (<any>vscode.window).registerTerminalLinkProvider({

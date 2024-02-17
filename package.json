@@ -116,6 +116,10 @@
 			{
 				"command": "multiclip.snapshotClipboard",
 				"title": "Multiclip Snapshot Clipboard"
+			},
+			{
+				"command": "multiclip.openFileInVIM",
+				"title": "Multiclip Open File in VIM"
 			}
 		],
 		"keybindings": [
@@ -183,6 +187,12 @@
 				"key": "shift+ctrl+x",
 				"mac": "shift+cmd+x",
 				"command": "multiclip.cutMerge",
+				"when": "editorTextFocus"
+			},
+			{
+				"key": "ctrl+m",
+				"mac": "ctrl+m",
+				"command": "multiclip.openFileInVIM",
 				"when": "editorTextFocus"
 			}
 		]
