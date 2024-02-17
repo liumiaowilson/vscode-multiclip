@@ -104,6 +104,18 @@
 			{
 				"command": "multiclip.cutMerge",
 				"title" : "Multiclip Cut and Merge to Clipboard"
+			},
+			{
+				"command": "multiclip.fileToClipboard",
+				"title": "Multiclip File to Clipboard"
+			},
+			{
+				"command": "multiclip.clipboardToFile",
+				"title": "Multiclip Clipboard to File"
+			},
+			{
+				"command": "multiclip.snapshotClipboard",
+				"title": "Multiclip Snapshot Clipboard"
 			}
 		],
 		"keybindings": [

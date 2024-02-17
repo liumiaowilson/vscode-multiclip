@@ -1,4 +1,7 @@
 import { spawn } from 'child_process';
+import { homedir} from 'os';
+import { sep } from 'path';
+import { readFileSync, writeFileSync, appendFileSync } from 'fs';
 import * as vscode from 'vscode';
 import Window = vscode.window;
 import QuickPickItem = vscode.QuickPickItem;
@@ -287,7 +290,6 @@ export function activate(context: vscode.ExtensionContext) {
         doPaste(copyBuffer[3]);
     }));
 
-
     disposables.push(vscode.commands.registerCommand('multiclip.paste_5', () => {
         if (copyBuffer.length == 0) {
             Window.setStatusBarMessage(
@@ -296,6 +298,26 @@ export function activate(context: vscode.ExtensionContext) {
         }
 
         doPaste(copyBuffer[4]);
+    }));
+
+    disposables.push(vscode.commands.registerCommand('multiclip.fileToClipboard', () => {
+        const file = homedir() + sep + 'clipboard';
+        const content = readFileSync(file, 'utf8');
+        return (<any>vscode.env).clipboard.writeText(content.trim());
+    }));
+
+    disposables.push(vscode.commands.registerCommand('multiclip.clipboardToFile', () => {
+        return (<any>vscode.env).clipboard.readText().then(text => {
+            const file = homedir() + sep + 'clipboard';
+            writeFileSync(file, text);
+        });
+    }));
+
+    disposables.push(vscode.commands.registerCommand('multiclip.snapshotClipboard', () => {
+        return (<any>vscode.env).clipboard.readText().then(text => {
+            const file = homedir() + sep + 'snapshot';
+            appendFileSync(file, text);
+        });
     }));
 
     context.subscriptions.concat(disposables);
