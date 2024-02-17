@@ -334,6 +334,9 @@ export function activate(context: vscode.ExtensionContext) {
             if(!path) {
                 return vscode.window.showInputBox({ placeHolder: 'Path of Script to Run'});
             }
+            else {
+                return path;
+            }
         }).then(path => {
             if(!path) return;
 
