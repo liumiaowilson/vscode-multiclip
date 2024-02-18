@@ -3,6 +3,7 @@ import { homedir} from 'os';
 import { sep } from 'path';
 import { readFileSync, writeFileSync, appendFileSync } from 'fs';
 import * as vscode from 'vscode';
+import { Logger } from './logger';
 import Window = vscode.window;
 import QuickPickItem = vscode.QuickPickItem;
 import QuickPickOptions = vscode.QuickPickOptions;
@@ -338,13 +339,21 @@ export function activate(context: vscode.ExtensionContext) {
                 return path;
             }
         }).then(path => {
+            Logger.info('Run script: ' + path);
+
             if(!path) return;
 
             path = path.replace('~', homedir());
 
             const script = readFileSync(path, 'utf8');
+            const context = {
+                Logger,
+            };
+
             const fn = eval(script);
-            return fn(vscode);
+            return fn(vscode, context);
+        }).catch(error => {
+            Logger.error(error.message);
         });
     }));
 
