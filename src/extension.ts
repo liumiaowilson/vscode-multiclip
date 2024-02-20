@@ -392,6 +392,63 @@ export function activate(context: vscode.ExtensionContext) {
             spawn('bash', [ '/home/codebuilder/DevOps/dev', 'resolveLink', link.data, ]);
         },
     });
+
+    if (config.hideOnOpen) {
+        if (config.autoHideReferences) {
+            vscode.commands.executeCommand("closeReferenceSearch");
+        }
+
+        if (config.autoHidePanel) {
+            vscode.commands.executeCommand("workbench.action.closePanel");
+        }
+
+        if (config.autoHideSideBar) {
+            vscode.commands.executeCommand("workbench.action.closeSidebar");
+        }
+
+        if (config.autoHideAuxiliaryBar) {
+            vscode.commands.executeCommand("workbench.action.closeAuxiliaryBar");
+        }
+    }
+
+    vscode.window.onDidChangeTextEditorSelection(selection => {
+        const config = vscode.workspace.getConfiguration("multiclip");
+        const path = vscode.window.activeTextEditor.document.fileName;
+        const pathIsFile = path.includes(".") || path.includes("\\") || path.includes("/");
+        const scheme = selection.textEditor.document.uri.scheme;
+
+        if (
+            selection.kind != vscode.TextEditorSelectionChangeKind.Mouse || // selection was not from a click
+            selection.selections.length != 1 ||                      // no selections or multiselections
+            selection.selections.find(a => a.isEmpty) == null ||     // multiselections
+            !pathIsFile ||                                           // The debug window editor
+            scheme == "output"                                       // The output window
+        ) {
+            return;
+        }
+
+        if (config.autoHideReferences) {
+            vscode.commands.executeCommand("closeReferenceSearch");
+        }
+
+        setTimeout(function () {
+            if (config.autoHidePanel) {
+                vscode.commands.executeCommand("workbench.action.closePanel");
+            }
+        }, config.panelDelay);
+
+        setTimeout(function () {
+            if (config.autoHideSideBar) {
+                vscode.commands.executeCommand("workbench.action.closeSidebar");
+            }
+        }, config.sideBarDelay);
+
+        setTimeout(function () {
+            if (config.autoHideAuxiliaryBar) {
+                vscode.commands.executeCommand("workbench.action.closeAuxiliaryBar");
+            }
+        }, config.sideBarDelay);
+    });
 }
 
 export function deactivate() {}
